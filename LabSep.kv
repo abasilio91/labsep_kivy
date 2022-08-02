@@ -10,34 +10,6 @@ MainWidget:
             size: self.size
 
     Label:
-        text: 'Contagem automática'
-        size_hint: None, None
-        size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.1, 'top': 1}
-
-    Switch:
-        id: auto_count
-        size_hint: None, None
-        size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.25, 'top': 1}
-        active: True
-        disabled: not exp_controller.active
-
-    Label:
-        text: root.expType
-        size_hint: None, None
-        size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.75, 'top': 1}
-
-    Switch:
-        id: exp_controller
-        size_hint: None, None
-        size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.9, 'top': 1}
-        on_active: root.exptype_select(self)
-        active: True
-
-    Label:
         text: 'Pasta de dados'
         size_hint: None, None
         size: dp(40), dp(40)
@@ -104,28 +76,10 @@ MainWidget:
         on_text_validate: root.on_material_val(self)
 
     Label:
-        text: 'Tempo de medida (dia)'
-        size_hint: None, None
-        size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.1, 'top': 0.61}
-
-    TextInput:
-        id: time_elapsed
-        text: root.time_elapsed
-        halign: 'center'
-        write_tab: False
-        size_hint: None, None
-        size: dp(400), dp(30)
-        pos_hint: {'center_x': 0.5, 'top': 0.6}
-        multiline: False
-        disabled: auto_count.active
-        on_text_validate: root.on_time_elapsed_val(self)
-
-    Label:
         text: 'Posição x'
         size_hint: None, None
         size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.1, 'top': 0.51}
+        pos_hint: {'center_x': 0.1, 'top': 0.61}
 
     TextInput:
         id: posx
@@ -134,7 +88,7 @@ MainWidget:
         halign: 'center'
         write_tab: False
         size: dp(400), dp(30)
-        pos_hint: {'center_x': 0.5, 'top': 0.5}
+        pos_hint: {'center_x': 0.5, 'top': 0.6}
         multiline: False
         on_text_validate: root.on_posx_val(self)
 
@@ -142,7 +96,7 @@ MainWidget:
         text: 'Posição z'
         size_hint: None, None
         size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.1, 'top': 0.41}
+        pos_hint: {'center_x': 0.1, 'top': 0.51}
 
     TextInput:
         id: posz
@@ -151,7 +105,7 @@ MainWidget:
         halign: 'center'
         write_tab: False
         size: dp(400), dp(30)
-        pos_hint: {'center_x': 0.5, 'top': 0.4}
+        pos_hint: {'center_x': 0.5, 'top': 0.5}
         multiline: False
         on_text_validate: root.on_posz_val(self)
 
@@ -159,7 +113,7 @@ MainWidget:
         text: 'Número de pontos'
         size_hint: None, None
         size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.1, 'top': 0.31}
+        pos_hint: {'center_x': 0.1, 'top': 0.41}
 
     TextInput:
         id: num_points
@@ -168,7 +122,7 @@ MainWidget:
         halign: 'center'
         write_tab: False
         size: dp(400), dp(30)
-        pos_hint: {'center_x': 0.5, 'top': 0.3}
+        pos_hint: {'center_x': 0.5, 'top': 0.4}
         multiline: False
         on_text_validate: root.on_num_points_val(self)
 
@@ -176,7 +130,7 @@ MainWidget:
         text: 'Tempo de coleta (s)'
         size_hint: None, None
         size: dp(40), dp(40)
-        pos_hint: {'center_x': 0.1, 'top': 0.21}
+        pos_hint: {'center_x': 0.1, 'top': 0.31}
 
     TextInput:
         id: time
@@ -185,7 +139,7 @@ MainWidget:
         halign: 'center'
         write_tab: False
         size: dp(400), dp(30)
-        pos_hint: {'center_x': 0.5, 'top': 0.2}
+        pos_hint: {'center_x': 0.5, 'top': 0.3}
         multiline: False
         on_text_validate: root.on_time_val(self)
 
