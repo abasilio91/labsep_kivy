@@ -52,6 +52,12 @@ class MainWidget(RelativeLayout):
         self.on_temperature_val(self.ids.temperature)
         self.get_measure()
 
+        if Path(f'resultados/{self.filename}.csv').is_file():
+            self.time_diff = self.get_time_diff()
+        else:
+            self.create_file()
+            self.time_diff = 0
+
         with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
             writer = csv.writer(file)
 
