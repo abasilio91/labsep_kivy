@@ -162,7 +162,6 @@ class MainWidget(BoxLayout):
             self.plot_img = 'imgs/z-contagem.png'
             self.ids.img_plt.reload()
 
-
 class LabSepApp(App):
     pass
 

@@ -8,6 +8,7 @@ MainWidget:
 
         BoxLayout:
             orientation: 'horizontal'
+            size_hint: 1, 0.4
 
             RelativeLayout:
                 canvas.before:
@@ -31,7 +32,7 @@ MainWidget:
                     background_normal: 'icons/folder_search.png'
                     size_hint: None, None
                     size: dp(30), dp(30)
-                    pos_hint: {'center_x': 0.35, 'top': 1}
+                    pos_hint: {'center_x': 0.5, 'top': 1}
                     on_press: root.get_measures_folder()
 
                 TextInput:
@@ -52,7 +53,7 @@ MainWidget:
                     background_normal: 'icons/folder_search.png'
                     size_hint: None, None
                     size: dp(30), dp(30)
-                    pos_hint: {'center_x': 0.85, 'top': 1}
+                    pos_hint: {'right': 1, 'top': 1}
                     on_press: root.get_data_file()
 
                 TextInput:
@@ -63,7 +64,7 @@ MainWidget:
                     size_hint: None, None
                     write_tab: False
                     size: dp(400), dp(30)
-                    pos_hint: {'center_x': 0.5, 'top': 0.9}
+                    pos_hint: {'center_x': 0.5, 'top': 0.87}
                     multiline: False
                     on_text_validate: root.on_material_val(self)
 
@@ -71,7 +72,7 @@ MainWidget:
                     text: 'Posição x'
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.81}
+                    pos_hint: {'center_x': 0.25, 'top': 0.75}
 
                 TextInput:
                     id: posx
@@ -80,7 +81,7 @@ MainWidget:
                     halign: 'center'
                     write_tab: False
                     size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 0.76}
+                    pos_hint: {'center_x': 0.25, 'top': 0.65}
                     multiline: False
                     on_text_validate: root.on_posx_val(self)
 
@@ -88,7 +89,7 @@ MainWidget:
                     text: 'Posição z'
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.81}
+                    pos_hint: {'center_x': 0.75, 'top': 0.75}
 
                 TextInput:
                     id: posz
@@ -97,7 +98,7 @@ MainWidget:
                     halign: 'center'
                     write_tab: False
                     size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 0.76}
+                    pos_hint: {'center_x': 0.75, 'top': 0.65}
                     multiline: False
                     on_text_validate: root.on_posz_val(self)
 
@@ -105,7 +106,7 @@ MainWidget:
                     text: 'Número de pontos'
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.71}
+                    pos_hint: {'center_x': 0.25, 'top': 0.55}
 
                 TextInput:
                     id: num_points
@@ -114,7 +115,7 @@ MainWidget:
                     halign: 'center'
                     write_tab: False
                     size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 0.66}
+                    pos_hint: {'center_x': 0.25, 'top': 0.45}
                     multiline: False
                     on_text_validate: root.on_num_points_val(self)
 
@@ -122,7 +123,7 @@ MainWidget:
                     text: 'Tempo de coleta (s)'
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.71}
+                    pos_hint: {'center_x': 0.75, 'top': 0.55}
 
                 TextInput:
                     id: time
@@ -131,7 +132,7 @@ MainWidget:
                     halign: 'center'
                     write_tab: False
                     size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 0.66}
+                    pos_hint: {'center_x': 0.75, 'top': 0.45}
                     multiline: False
                     on_text_validate: root.on_time_val(self)
 
@@ -139,7 +140,7 @@ MainWidget:
                     text: 'Inclinação (graus)'
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.61}
+                    pos_hint: {'center_x': 0.25, 'top': 0.35}
 
                 TextInput:
                     id: angle
@@ -148,7 +149,7 @@ MainWidget:
                     halign: 'center'
                     write_tab: False
                     size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 0.56}
+                    pos_hint: {'center_x': 0.25, 'top': 0.25}
                     multiline: False
                     on_text_validate: root.on_angle_val(self)
 
@@ -156,7 +157,7 @@ MainWidget:
                     text: 'Temperatura (ºC)'
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.61}
+                    pos_hint: {'center_x': 0.75, 'top': 0.35}
 
                 TextInput:
                     id: temperature
@@ -165,7 +166,7 @@ MainWidget:
                     halign: 'center'
                     write_tab: False
                     size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 0.56}
+                    pos_hint: {'center_x': 0.75, 'top': 0.25}
                     multiline: False
                     on_text_validate: root.on_temperature_val(self)
 
@@ -201,7 +202,7 @@ MainWidget:
                     active: False
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.9}
+                    pos_hint: {'center_x': 0.25, 'top': 0.85}
 
                 Label:
                     text: 'X vs Contagem'
@@ -214,9 +215,9 @@ MainWidget:
                     active: False
                     size_hint: None, None
                     size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.9}
+                    pos_hint: {'center_x': 0.75, 'top': 0.85}
         
-    Image:
-        id: img_plt
-        size: self.size
-        source: root.plot_img
+        Image:
+            id: img_plt
+            size: self.size
+            source: root.plot_img
