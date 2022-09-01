@@ -26,6 +26,8 @@ from kivy.uix.image import Image
 from tkinter import filedialog, messagebox
 from pathlib import Path
 
+from graphs import zcount
+
 class MainWidget(BoxLayout):
     filename = StringProperty('teste_v2')
     folder_path = StringProperty('dados/TXT')
@@ -36,6 +38,7 @@ class MainWidget(BoxLayout):
     time = StringProperty('20.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
+    plot_img = StringProperty('')
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
@@ -53,9 +56,7 @@ class MainWidget(BoxLayout):
         self.on_temperature_val(self.ids.temperature)
         self.get_measure()
 
-        if Path(f'resultados/{self.filename}.csv').is_file():
-            self.time_diff = self.get_time_diff()
-        else:
+        if not Path(f'resultados/{self.filename}.csv').is_file():
             self.create_file()
             self.time_diff = 0
 
@@ -79,6 +80,8 @@ class MainWidget(BoxLayout):
         root.withdraw()
         messagebox.showinfo(message='Ponto adicionado com sucesso!')
         root.destroy()
+
+        self.show_plots()
 
     # Create a .csv file to store the data, if the file doesn't already exist
     def create_file(self):
@@ -152,6 +155,13 @@ class MainWidget(BoxLayout):
 
     def on_temperature_val(self, widget):
         self.temperature = widget.text
+
+    def show_plots(self):
+        if self.ids.stch_z_plot.active:
+            zcount(self.filename)
+            self.plot_img = 'imgs/z-contagem.png'
+            self.ids.img_plt.reload()
+
 
 class LabSepApp(App):
     pass
