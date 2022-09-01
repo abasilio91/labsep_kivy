@@ -10,27 +10,29 @@ from kivy.config import Config
 # Config.set('graphics', 'width', '1200')
 # Config.set('graphics', 'height', '600')
 
-from kivy.app import App
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.core.window import Window
-from kivy.properties import StringProperty
 import tkinter as tk
-from tkinter import filedialog, messagebox
 import os
 import datetime
 import pandas as pd
-from pathlib import Path
 import numpy as np
 import csv
 
-class MainWidget(RelativeLayout):
-    expType = StringProperty('Varredura')
-    filename = StringProperty('')
+from kivy.app import App
+from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import StringProperty
+from kivy.uix.image import Image
+
+from tkinter import filedialog, messagebox
+from pathlib import Path
+
+class MainWidget(BoxLayout):
+    filename = StringProperty('teste_v2')
     folder_path = StringProperty('dados/TXT')
-    material = StringProperty('')
+    material = StringProperty('teste')
     num_points = StringProperty('10')
-    posx = StringProperty('')
-    posz = StringProperty('')
+    posx = StringProperty('20')
+    posz = StringProperty('23')
     time = StringProperty('20.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
@@ -38,7 +40,6 @@ class MainWidget(RelativeLayout):
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
-        self.win_len, self.win_height = Window.size
 
     # Compile the new data to a dataframe
     def add_measure(self):
