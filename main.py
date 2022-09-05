@@ -22,6 +22,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
 from kivy.uix.image import Image
+from kivy.clock import Clock
 
 from tkinter import filedialog, messagebox
 from pathlib import Path
@@ -43,6 +44,9 @@ class MainWidget(BoxLayout):
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
+
+        # if self.ids.swtch_auto_collect.active:
+        #     Clock.schedule_interval(update, 1/60)
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -161,6 +165,20 @@ class MainWidget(BoxLayout):
             zcount(self.filename)
             self.plot_img = 'imgs/z-contagem.png'
             self.ids.img_plt.reload()
+
+    # def update(self, dt):
+    #     self.add_measure()
+    #     pass
+
+    def test(self):
+        if self.ids.tg_auto_collect.state == 'down':
+            self.ids.button_add.disabled = True
+            self.ids.num_points.disabled = True
+
+        if self.ids.tg_auto_collect.state == 'normal':
+            self.ids.button_add.disabled = False
+            self.ids.num_points.disabled = False
+        
 
 class LabSepApp(App):
     pass

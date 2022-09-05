@@ -174,10 +174,20 @@ MainWidget:
                     id: button_add
                     text: 'Adicionar'
                     size_hint: None, None
-                    size: dp(400), dp(30)
-                    pos_hint: {'center_x': 0.5, 'bottom': 0}
+                    size: dp(200), dp(30)
+                    pos_hint: {'center_x': 0.25, 'bottom': 0}
                     on_press: root.add_measure()
-            
+                    disabled: 
+
+                ToggleButton:
+                    text: 'auto coletar'
+                    id: tg_auto_collect
+                    active: False
+                    size_hint: None, None
+                    size: dp(200), dp(30)
+                    pos_hint: {'center_x': 0.75, 'bottom': 0}
+                    on_press: root.test()
+
             RelativeLayout:
                 canvas.before:
                     Color:
