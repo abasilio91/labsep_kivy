@@ -177,7 +177,6 @@ MainWidget:
                     size: dp(200), dp(30)
                     pos_hint: {'center_x': 0.25, 'bottom': 0}
                     on_press: root.add_measure()
-                    disabled: 
 
                 ToggleButton:
                     text: 'auto coletar'
@@ -186,7 +185,7 @@ MainWidget:
                     size_hint: None, None
                     size: dp(200), dp(30)
                     pos_hint: {'center_x': 0.75, 'bottom': 0}
-                    on_press: root.test()
+                    on_press: root.activate_auto_collect()
 
             RelativeLayout:
                 canvas.before:

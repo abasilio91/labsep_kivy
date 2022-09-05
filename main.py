@@ -45,9 +45,6 @@ class MainWidget(BoxLayout):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
 
-        # if self.ids.swtch_auto_collect.active:
-        #     Clock.schedule_interval(update, 1/60)
-
     # Compile the new data to a dataframe
     def add_measure(self):
         self.on_material_val(self.ids.material)
@@ -166,19 +163,47 @@ class MainWidget(BoxLayout):
             self.plot_img = 'imgs/z-contagem.png'
             self.ids.img_plt.reload()
 
-    # def update(self, dt):
-    #     self.add_measure()
-    #     pass
+    def activate_auto_collect(self):
+        if self.ids.tg_auto_collect.state == 'normal':
+            self.ids.button_add.disabled = False
+            self.ids.num_points.disabled = False     
 
-    def test(self):
         if self.ids.tg_auto_collect.state == 'down':
             self.ids.button_add.disabled = True
             self.ids.num_points.disabled = True
+            self.index = 0
+            Clock.schedule_interval(self.update, float(self.time))
 
-        if self.ids.tg_auto_collect.state == 'normal':
-            self.ids.button_add.disabled = False
-            self.ids.num_points.disabled = False
+    def update(self, dt):
+        self.on_material_val(self.ids.material)
+        self.on_posx_val(self.ids.posx)
+        self.on_posz_val(self.ids.posz)
+        self.on_time_val(self.ids.time)
+        self.on_filename_val(self.ids.filename)
+        self.on_angle_val(self.ids.angle)
+        self.on_temperature_val(self.ids.temperature)
+        self.get_measure()
+
+        if not Path(f'resultados/{self.filename}.csv').is_file():
+            self.create_file()
+            self.time_diff = 0
+
+        with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            self.data = [self.date,
+                        self.material,
+                        self.index,
+                        self.posx,
+                        self.posz,
+                        self.measure[self.index],
+                        (float(self.time) * self.index),
+                        self.angle,
+                        self.temperature]
+            writer.writerow(self.data)
+            file.close()
         
+        self.index += 1
+        self.show_plots()
 
 class LabSepApp(App):
     pass
