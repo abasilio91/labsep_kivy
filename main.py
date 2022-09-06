@@ -59,7 +59,6 @@ class MainWidget(BoxLayout):
 
         if not Path(f'resultados/{self.filename}.csv').is_file():
             self.create_file()
-            self.time_diff = 0
 
         with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
             writer = csv.writer(file)
@@ -119,9 +118,14 @@ class MainWidget(BoxLayout):
         files = Path(self.folder_path).glob('*.txt')
         measures = []
 
-        for filename, index in zip(files, range(int(self.num_points))):
-            df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
-            measures.append(df['GROSS'][0])
+        if self.ids.tg_auto_collect.state == 'normal':
+            for filename in files:
+                df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
+                measures.append(df['GROSS'][0])
+
+        else:
+            df = pd.read_csv(list(files)[self.index], header=0, skiprows=4, sep=" ", skipinitialspace=True)
+            measures = df['GROSS'][0]
 
         self.measure = measures
 
@@ -175,6 +179,7 @@ class MainWidget(BoxLayout):
             Clock.schedule_interval(self.update, float(self.time))
 
     def update(self, dt):
+        print(self.index)
         self.on_material_val(self.ids.material)
         self.on_posx_val(self.ids.posx)
         self.on_posz_val(self.ids.posz)
@@ -186,7 +191,6 @@ class MainWidget(BoxLayout):
 
         if not Path(f'resultados/{self.filename}.csv').is_file():
             self.create_file()
-            self.time_diff = 0
 
         with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
             writer = csv.writer(file)
@@ -195,7 +199,7 @@ class MainWidget(BoxLayout):
                         self.index,
                         self.posx,
                         self.posz,
-                        self.measure[self.index],
+                        self.measure,
                         (float(self.time) * self.index),
                         self.angle,
                         self.temperature]
