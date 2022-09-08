@@ -35,11 +35,11 @@ def zcount(filename):
         hue = 'x',
         style = 'x'
     )
+
     plt.xticks(plot_data['z'])
     plt.xlabel('z (cm)')
     plt.legend(title = 'x (cm)', bbox_to_anchor=(1,1))
     plt.savefig('imgs/z-contagem.png')
-    plt.show()
 
 def xcount(filename):
     plot_data = __get_data(filename)
@@ -51,11 +51,11 @@ def xcount(filename):
         hue = 'z',
         style = 'z'
     )
+
     plt.xticks(plot_data['x'])
     plt.xlabel('x (cm)')
     plt.legend(title = 'z (cm)', bbox_to_anchor=(1,1))
     plt.savefig('imgs/x-contagem.png')
-    plt.show()
 
 def count_over_time(filename, x_pos, z_pos):
     data = pd.read_csv(f'resultados/{filename}.csv')
@@ -66,6 +66,7 @@ def count_over_time(filename, x_pos, z_pos):
         x = 'tempo(s)',
         y = 'contagem'
     )
-    plt.savefig('imgs/count_over_time.png')
+
     plt.title(f'x = {x_pos} cm ---- z = {z_pos} cm')
-    plt.show()
+    plt.xticks(plot_data['tempo(s)'])
+    plt.savefig('imgs/count_over_time.png')

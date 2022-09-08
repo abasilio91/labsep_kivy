@@ -225,8 +225,23 @@ MainWidget:
                     size_hint: None, None
                     size: dp(40), dp(40)
                     pos_hint: {'center_x': 0.75, 'top': 0.85}
+
+
+                Label:
+                    text: 'Contagem vs tempo'
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                    pos_hint: {'center_x': 0.25, 'top': 0.70}
+                
+                Switch:
+                    id: stch_cont_time
+                    active: False
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                    pos_hint: {'center_x': 0.25, 'top': 0.60}
+                    active: True
         
         Image:
-            id: img_plt
-            size: self.size
+            id: img_plot
+#            size: self.size
             source: root.plot_img

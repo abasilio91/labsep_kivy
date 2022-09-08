@@ -27,7 +27,7 @@ from kivy.clock import Clock
 from tkinter import filedialog, messagebox
 from pathlib import Path
 
-from graphs import zcount
+from graphs import zcount, xcount, count_over_time
 
 class MainWidget(BoxLayout):
     filename = StringProperty('teste_v2')
@@ -74,7 +74,6 @@ class MainWidget(BoxLayout):
                             self.angle,
                             self.temperature]
                 writer.writerow(self.data)
-            file.close()
 
         root = tk.Tk()
         root.withdraw()
@@ -165,7 +164,17 @@ class MainWidget(BoxLayout):
         if self.ids.stch_z_plot.active:
             zcount(self.filename)
             self.plot_img = 'imgs/z-contagem.png'
-            self.ids.img_plt.reload()
+
+        if self.ids.stch_x_plot.active:
+            xcount(self.filename)
+            self.plot_img = 'imgs/x-contagem.png'
+
+        if self.ids.stch_cont_time.active:
+            count_over_time(self.filename, float(self.posx), float(self.posz))
+            self.plot_img = 'imgs/count_over_time.png'
+        
+        self.ids.img_plot.reload()
+
 
     def activate_auto_collect(self):
         if self.ids.tg_auto_collect.state == 'normal':
@@ -179,7 +188,6 @@ class MainWidget(BoxLayout):
             Clock.schedule_interval(self.update, float(self.time))
 
     def update(self, dt):
-        print(self.index)
         self.on_material_val(self.ids.material)
         self.on_posx_val(self.ids.posx)
         self.on_posz_val(self.ids.posz)
@@ -204,7 +212,6 @@ class MainWidget(BoxLayout):
                         self.angle,
                         self.temperature]
             writer.writerow(self.data)
-            file.close()
         
         self.index += 1
         self.show_plots()
