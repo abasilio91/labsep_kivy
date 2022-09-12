@@ -27,7 +27,7 @@ from kivy.clock import Clock
 from tkinter import filedialog, messagebox
 from pathlib import Path
 
-from graphs import zcount, xcount, count_over_time
+from graphs import zcount, xcount, count_over_time, clear_image
 
 class MainWidget(BoxLayout):
     filename = StringProperty('teste_v2')
@@ -43,7 +43,8 @@ class MainWidget(BoxLayout):
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
-        self.date = datetime.date.today()        
+        self.date = datetime.date.today()
+        self.img_name = 'count_over_time'
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -163,14 +164,17 @@ class MainWidget(BoxLayout):
     def show_plots(self):
         if self.ids.stch_z_plot.active:
             zcount(self.filename)
+            self.img_name = 'z-contagem'
             self.plot_img = 'imgs/z-contagem.png'
 
         if self.ids.stch_x_plot.active:
             xcount(self.filename)
+            self.img_name = 'x-contagem'
             self.plot_img = 'imgs/x-contagem.png'
 
         if self.ids.stch_cont_time.active:
             count_over_time(self.filename, float(self.posx), float(self.posz))
+            self.img_name = 'count_over_time'
             self.plot_img = 'imgs/count_over_time.png'
 
     def activate_auto_collect(self):
@@ -184,6 +188,8 @@ class MainWidget(BoxLayout):
                 self.event.cancel()
 
         if self.ids.tg_auto_collect.state == 'down':
+            clear_image(self.img_name)
+            self.ids.img_plot.reload()
             self.ids.button_add.disabled = True
             self.ids.num_points.disabled = True
             self.index = 0

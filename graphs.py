@@ -62,7 +62,7 @@ def count_over_time(filename, x_pos, z_pos):
     print(data)
     print('\n...\n')
 
-    plot_data = data.query('z == @z_pos and x == @x_pos')
+    plot_data = data.query('z == @z_pos and x == @x_pos').copy()
     print(plot_data)
 
     sns.scatterplot(
@@ -74,3 +74,7 @@ def count_over_time(filename, x_pos, z_pos):
     plt.title(f'x = {x_pos} cm ---- z = {z_pos} cm')
     plt.xticks(plot_data['tempo(s)'])
     plt.savefig('imgs/count_over_time.png')
+
+def clear_image(name):
+    plt.plot([], [])
+    plt.savefig(f'imgs/{name}.png')
