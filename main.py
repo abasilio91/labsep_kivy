@@ -30,12 +30,12 @@ from pathlib import Path
 from graphs import zcount
 
 class MainWidget(BoxLayout):
-    filename = StringProperty('teste_v2')
+    filename = StringProperty('')
     folder_path = StringProperty('dados/TXT')
-    material = StringProperty('teste')
+    material = StringProperty('')
     num_points = StringProperty('10')
-    posx = StringProperty('20')
-    posz = StringProperty('23')
+    posx = StringProperty('')
+    posz = StringProperty('')
     time = StringProperty('20.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
