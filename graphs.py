@@ -59,7 +59,11 @@ def xcount(filename):
 
 def count_over_time(filename, x_pos, z_pos):
     data = pd.read_csv(f'resultados/{filename}.csv')
+    print(data)
+    print('\n...\n')
+
     plot_data = data.query('z == @z_pos and x == @x_pos')
+    print(plot_data)
 
     sns.scatterplot(
         data = plot_data,

@@ -36,14 +36,14 @@ class MainWidget(BoxLayout):
     num_points = StringProperty('10')
     posx = StringProperty('20')
     posz = StringProperty('23')
-    time = StringProperty('20.0')
+    time = StringProperty('2.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
-    plot_img = StringProperty('')
+    plot_img = StringProperty('imgs/empty.png')
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
-        self.date = datetime.date.today()
+        self.date = datetime.date.today()        
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -172,20 +172,22 @@ class MainWidget(BoxLayout):
         if self.ids.stch_cont_time.active:
             count_over_time(self.filename, float(self.posx), float(self.posz))
             self.plot_img = 'imgs/count_over_time.png'
-        
-        self.ids.img_plot.reload()
-
 
     def activate_auto_collect(self):
         if self.ids.tg_auto_collect.state == 'normal':
             self.ids.button_add.disabled = False
-            self.ids.num_points.disabled = False     
+            self.ids.num_points.disabled = False
+            self.plot_img = 'imgs/empty.png'
+            self.ids.img_plot.reload()
+            
+            if self.event:
+                self.event.cancel()
 
         if self.ids.tg_auto_collect.state == 'down':
             self.ids.button_add.disabled = True
             self.ids.num_points.disabled = True
             self.index = 0
-            Clock.schedule_interval(self.update, float(self.time))
+            self.event = Clock.schedule_interval(self.update, float(self.time))
 
     def update(self, dt):
         self.on_material_val(self.ids.material)
@@ -215,6 +217,7 @@ class MainWidget(BoxLayout):
         
         self.index += 1
         self.show_plots()
+        self.ids.img_plot.reload()
 
 class LabSepApp(App):
     pass
