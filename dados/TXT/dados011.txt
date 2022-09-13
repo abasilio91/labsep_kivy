@@ -1,0 +1,6 @@
+
+Detector #1      ACQ 07-set-2021 at 15:27:57   RT = 20.0   LT = 20.0
+            digiBASE-TARG-LabSepUFU
+            contagem n 010
+ROI#   RANGE(    )    GROSS      NET   +/-  CENTROID  FWHM FW(1/5)M LIBRARY (    )       cA    +/-
+ 1   30.00   47.00     8502     6672   101    35.36   4.09   5.91  uncal

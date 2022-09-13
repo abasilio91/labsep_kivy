@@ -27,23 +27,24 @@ from kivy.clock import Clock
 from tkinter import filedialog, messagebox
 from pathlib import Path
 
-from graphs import zcount
+from graphs import zcount, xcount, count_over_time, clear_image
 
 class MainWidget(BoxLayout):
-    filename = StringProperty('')
+    filename = StringProperty('teste_v2')
     folder_path = StringProperty('dados/TXT')
-    material = StringProperty('')
+    material = StringProperty('teste')
     num_points = StringProperty('10')
-    posx = StringProperty('')
-    posz = StringProperty('')
-    time = StringProperty('20.0')
+    posx = StringProperty('20')
+    posz = StringProperty('23')
+    time = StringProperty('2.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
-    plot_img = StringProperty('')
+    plot_img = StringProperty('imgs/empty.png')
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
+        self.img_name = 'count_over_time'
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -59,7 +60,6 @@ class MainWidget(BoxLayout):
 
         if not Path(f'resultados/{self.filename}.csv').is_file():
             self.create_file()
-            self.time_diff = 0
 
         with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
             writer = csv.writer(file)
@@ -75,7 +75,6 @@ class MainWidget(BoxLayout):
                             self.angle,
                             self.temperature]
                 writer.writerow(self.data)
-            file.close()
 
         root = tk.Tk()
         root.withdraw()
@@ -119,9 +118,14 @@ class MainWidget(BoxLayout):
         files = Path(self.folder_path).glob('*.txt')
         measures = []
 
-        for filename, index in zip(files, range(int(self.num_points))):
-            df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
-            measures.append(df['GROSS'][0])
+        if self.ids.tg_auto_collect.state == 'normal':
+            for filename in files:
+                df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
+                measures.append(df['GROSS'][0])
+
+        else:
+            df = pd.read_csv(list(files)[self.index], header=0, skiprows=4, sep=" ", skipinitialspace=True)
+            measures = df['GROSS'][0]
 
         self.measure = measures
 
@@ -160,19 +164,34 @@ class MainWidget(BoxLayout):
     def show_plots(self):
         if self.ids.stch_z_plot.active:
             zcount(self.filename)
+            self.img_name = 'z-contagem'
             self.plot_img = 'imgs/z-contagem.png'
-            self.ids.img_plt.reload()
+
+        if self.ids.stch_x_plot.active:
+            xcount(self.filename)
+            self.img_name = 'x-contagem'
+            self.plot_img = 'imgs/x-contagem.png'
+
+        if self.ids.stch_cont_time.active:
+            count_over_time(self.filename, float(self.posx), float(self.posz))
+            self.img_name = 'count_over_time'
+            self.plot_img = 'imgs/count_over_time.png'
 
     def activate_auto_collect(self):
         if self.ids.tg_auto_collect.state == 'normal':
             self.ids.button_add.disabled = False
-            self.ids.num_points.disabled = False     
+            self.ids.num_points.disabled = False
+            self.plot_img = 'imgs/empty.png'
+            self.ids.img_plot.reload()
+            
+            if self.event:
+                self.event.cancel()
 
         if self.ids.tg_auto_collect.state == 'down':
             self.ids.button_add.disabled = True
             self.ids.num_points.disabled = True
             self.index = 0
-            Clock.schedule_interval(self.update, float(self.time))
+            self.event = Clock.schedule_interval(self.update, float(self.time))
 
     def update(self, dt):
         self.on_material_val(self.ids.material)
@@ -186,7 +205,6 @@ class MainWidget(BoxLayout):
 
         if not Path(f'resultados/{self.filename}.csv').is_file():
             self.create_file()
-            self.time_diff = 0
 
         with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
             writer = csv.writer(file)
@@ -195,15 +213,15 @@ class MainWidget(BoxLayout):
                         self.index,
                         self.posx,
                         self.posz,
-                        self.measure[self.index],
+                        self.measure,
                         (float(self.time) * self.index),
                         self.angle,
                         self.temperature]
             writer.writerow(self.data)
-            file.close()
         
         self.index += 1
         self.show_plots()
+        self.ids.img_plot.reload()
 
 class LabSepApp(App):
     pass
