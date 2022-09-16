@@ -14,7 +14,6 @@ import tkinter as tk
 import os
 import datetime
 import pandas as pd
-import numpy as np
 import csv
 
 from kivy.app import App
@@ -28,13 +27,13 @@ from pathlib import Path
 from graphs import count_over_time
 
 class MainWidget(BoxLayout):
-    filename = StringProperty('teste_v2')
+    filename = StringProperty('')
     folder_path = StringProperty('dados/TXT')
-    material = StringProperty('teste')
+    material = StringProperty('')
     num_points = StringProperty('10')
-    posx = StringProperty('20')
-    posz = StringProperty('23')
-    time = StringProperty('2.0')
+    posx = StringProperty('')
+    posz = StringProperty('')
+    time = StringProperty('20.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
     plot_img = StringProperty('imgs/empty.png')
@@ -109,19 +108,14 @@ class MainWidget(BoxLayout):
         self.folder_path = filedialog.askdirectory()
         root.destroy()
 
-    # Get the measure data from the TARG results and calculates its average and standard deviation
+    # Get the measure data from the TARG results
     def get_measure(self):
         files = Path(self.folder_path).glob('*.txt')
         measures = []
 
-        if self.ids.tg_auto_collect.state == 'normal':
-            for filename in files:
-                df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
-                measures.append(df['GROSS'][0])
-
-        else:
-            df = pd.read_csv(list(files)[self.index], header=0, skiprows=4, sep=" ", skipinitialspace=True)
-            measures = df['GROSS'][0]
+        for filename in files:
+            df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
+            measures.append(df['GROSS'][0])
 
         self.measure = measures
 
@@ -157,68 +151,9 @@ class MainWidget(BoxLayout):
     def on_temperature_val(self, widget):
         self.temperature = widget.text
 
-    def show_plots(self):
-        if self.ids.stch_z_plot.active:
-            zcount(self.filename)
-            self.img_name = 'z-contagem'
-            self.plot_img = 'imgs/z-contagem.png'
-
-        if self.ids.stch_x_plot.active:
-            xcount(self.filename)
-            self.img_name = 'x-contagem'
-            self.plot_img = 'imgs/x-contagem.png'
-
-        if self.ids.stch_cont_time.active:
-            count_over_time(self.filename, float(self.posx), float(self.posz))
-            self.img_name = 'count_over_time'
-            self.plot_img = 'imgs/count_over_time.png'
-
-    def activate_auto_collect(self):
-        if self.ids.tg_auto_collect.state == 'normal':
-            self.ids.button_add.disabled = False
-            self.ids.num_points.disabled = False
-            self.plot_img = 'imgs/empty.png'
-            self.ids.img_plot.reload()
-            
-            if self.event:
-                self.event.cancel()
-
-        if self.ids.tg_auto_collect.state == 'down':
-            clear_image(self.img_name)
-            self.ids.img_plot.reload()
-            self.ids.button_add.disabled = True
-            self.ids.num_points.disabled = True
-            self.index = 0
-            self.event = Clock.schedule_interval(self.update, float(self.time))
-
     def update(self, dt):
-        self.on_material_val(self.ids.material)
-        self.on_posx_val(self.ids.posx)
-        self.on_posz_val(self.ids.posz)
-        self.on_time_val(self.ids.time)
-        self.on_filename_val(self.ids.filename)
-        self.on_angle_val(self.ids.angle)
-        self.on_temperature_val(self.ids.temperature)
-        self.get_measure()
-
-        if not Path(f'resultados/{self.filename}.csv').is_file():
-            self.create_file()
-
-        with open(f'resultados/{self.filename}.csv', 'a', newline='') as file:
-            writer = csv.writer(file)
-            self.data = [self.date,
-                        self.material,
-                        self.index,
-                        self.posx,
-                        self.posz,
-                        self.measure,
-                        (float(self.time) * self.index),
-                        self.angle,
-                        self.temperature]
-            writer.writerow(self.data)
-        
-        self.index += 1
-        self.show_plots()
+        count_over_time(self.folder_path, self.posx, self.posz)
+        self.plot_img = "imgs/count_over_time.png"
         self.ids.img_plot.reload()
 
 class LabSepApp(App):
