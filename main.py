@@ -18,16 +18,14 @@ import numpy as np
 import csv
 
 from kivy.app import App
-from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
-from kivy.uix.image import Image
 from kivy.clock import Clock
 
 from tkinter import filedialog, messagebox
 from pathlib import Path
 
-from graphs import zcount, xcount, count_over_time, clear_image
+from graphs import count_over_time
 
 class MainWidget(BoxLayout):
     filename = StringProperty('teste_v2')
@@ -44,7 +42,7 @@ class MainWidget(BoxLayout):
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
-        self.img_name = 'count_over_time'
+        Clock.schedule_interval(self.update, 30)
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -80,8 +78,6 @@ class MainWidget(BoxLayout):
         root.withdraw()
         messagebox.showinfo(message='Ponto adicionado com sucesso!')
         root.destroy()
-
-        self.show_plots()
 
     # Create a .csv file to store the data, if the file doesn't already exist
     def create_file(self):
@@ -188,6 +184,8 @@ class MainWidget(BoxLayout):
                 self.event.cancel()
 
         if self.ids.tg_auto_collect.state == 'down':
+            clear_image(self.img_name)
+            self.ids.img_plot.reload()
             self.ids.button_add.disabled = True
             self.ids.num_points.disabled = True
             self.index = 0

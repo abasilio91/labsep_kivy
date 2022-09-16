@@ -6,241 +6,189 @@ MainWidget:
     BoxLayout:
         orientation: 'vertical'
 
-        BoxLayout:
-            orientation: 'horizontal'
+        RelativeLayout:
             size_hint: 1, 0.4
 
-            RelativeLayout:
-                canvas.before:
-                    Color:
-                        rgb: rgba('#3b234a')
-                    Rectangle:
-                        size: self.size
+            canvas.before:
+                Color:
+                    rgb: rgba('#3b234a')
+                Rectangle:
+                    size: self.size
 
-                TextInput:
-                    text: root.folder_path
-                    halign: 'center'
-                    text_hint: 'Pasta de dados'
-                    write_tab: False
-                    size_hint: None, None
-                    size: dp(200), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 1}
-                    multiline: False
+            TextInput:
+                text: root.folder_path
+                halign: 'center'
+                text_hint: 'Pasta de dados'
+                write_tab: False
+                size_hint: None, None
+                size: dp(200), dp(30)
+                pos_hint: {'center_x': 0.25, 'top': 1}
+                multiline: False
 
-                Button:
-                    id: btn_folder
-                    background_normal: 'icons/folder_search.png'
-                    size_hint: None, None
-                    size: dp(30), dp(30)
-                    pos_hint: {'center_x': 0.5, 'top': 1}
-                    on_press: root.get_measures_folder()
+            Button:
+                id: btn_folder
+                background_normal: 'icons/folder_search.png'
+                size_hint: None, None
+                size: dp(30), dp(30)
+                pos_hint: {'center_x': 0.4, 'top': 1}
+                on_press: root.get_measures_folder()
 
-                TextInput:
-                    id: filename
-                    text: root.filename
-                    text_hint: 'Salvar como'
-                    focus: True
-                    halign: 'center'
-                    size_hint: None, None
-                    write_tab: False
-                    size: dp(150), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 1}
-                    multiline: False
-                    on_text_validate: root.on_filename_val(self)
+            TextInput:
+                id: filename
+                text: root.filename
+                text_hint: 'Salvar como'
+                focus: True
+                halign: 'center'
+                size_hint: None, None
+                write_tab: False
+                size: dp(300), dp(30)
+                pos_hint: {'center_x': 0.75, 'top': 1}
+                multiline: False
+                on_text_validate: root.on_filename_val(self)
 
-                Button:
-                    id: btn_saveas
-                    background_normal: 'icons/folder_search.png'
-                    size_hint: None, None
-                    size: dp(30), dp(30)
-                    pos_hint: {'right': 1, 'top': 1}
-                    on_press: root.get_data_file()
+            Button:
+                id: btn_saveas
+                background_normal: 'icons/folder_search.png'
+                size_hint: None, None
+                size: dp(30), dp(30)
+                pos_hint: {'center_x': 0.95, 'top': 1}
+                on_press: root.get_data_file()
 
-                TextInput:
-                    id: material
-                    text: root.material
-                    text_hint: 'Material'
-                    halign: 'center'
-                    size_hint: None, None
-                    write_tab: False
-                    size: dp(400), dp(30)
-                    pos_hint: {'center_x': 0.5, 'top': 0.87}
-                    multiline: False
-                    on_text_validate: root.on_material_val(self)
+            TextInput:
+                id: material
+                text: root.material
+                text_hint: 'Material'
+                halign: 'center'
+                size_hint: None, None
+                write_tab: False
+                size: dp(400), dp(30)
+                pos_hint: {'center_x': 0.5, 'top': 0.87}
+                multiline: False
+                on_text_validate: root.on_material_val(self)
 
-                Label:
-                    text: 'Posição x'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.75}
+            Label:
+                text: 'Posição x'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.25, 'top': 0.75}
 
-                TextInput:
-                    id: posx
-                    text: root.posx
-                    size_hint: None, None
-                    halign: 'center'
-                    write_tab: False
-                    size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 0.65}
-                    multiline: False
-                    on_text_validate: root.on_posx_val(self)
+            TextInput:
+                id: posx
+                text: root.posx
+                size_hint: None, None
+                halign: 'center'
+                write_tab: False
+                size: dp(40), dp(30)
+                pos_hint: {'center_x': 0.25, 'top': 0.65}
+                multiline: False
+                on_text_validate: root.on_posx_val(self)
 
-                Label:
-                    text: 'Posição z'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.75}
+            Label:
+                text: 'Posição z'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.5, 'top': 0.75}
 
-                TextInput:
-                    id: posz
-                    text: root.posz
-                    size_hint: None, None
-                    halign: 'center'
-                    write_tab: False
-                    size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 0.65}
-                    multiline: False
-                    on_text_validate: root.on_posz_val(self)
+            TextInput:
+                id: posz
+                text: root.posz
+                size_hint: None, None
+                halign: 'center'
+                write_tab: False
+                size: dp(40), dp(30)
+                pos_hint: {'center_x': 0.5, 'top': 0.65}
+                multiline: False
+                on_text_validate: root.on_posz_val(self)
 
-                Label:
-                    text: 'Número de pontos'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.55}
+            Label:
+                text: 'Número de pontos'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.25, 'top': 0.55}
 
-                TextInput:
-                    id: num_points
-                    text: root.num_points
-                    size_hint: None, None
-                    halign: 'center'
-                    write_tab: False
-                    size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 0.45}
-                    multiline: False
-                    on_text_validate: root.on_num_points_val(self)
+            TextInput:
+                id: num_points
+                text: root.num_points
+                size_hint: None, None
+                halign: 'center'
+                write_tab: False
+                size: dp(40), dp(30)
+                pos_hint: {'center_x': 0.25, 'top': 0.45}
+                multiline: False
+                on_text_validate: root.on_num_points_val(self)
 
-                Label:
-                    text: 'Tempo de coleta (s)'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.55}
+            Label:
+                text: 'Tempo de coleta (s)'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.5, 'top': 0.55}
 
-                TextInput:
-                    id: time
-                    text: root.time
-                    size_hint: None, None
-                    halign: 'center'
-                    write_tab: False
-                    size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 0.45}
-                    multiline: False
-                    on_text_validate: root.on_time_val(self)
+            TextInput:
+                id: time
+                text: root.time
+                size_hint: None, None
+                halign: 'center'
+                write_tab: False
+                size: dp(40), dp(30)
+                pos_hint: {'center_x': 0.5, 'top': 0.45}
+                multiline: False
+                on_text_validate: root.on_time_val(self)
 
-                Label:
-                    text: 'Inclinação (graus)'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.35}
+            Label:
+                text: 'Inclinação (graus)'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.25, 'top': 0.35}
 
-                TextInput:
-                    id: angle
-                    text: root.angle
-                    size_hint: None, None
-                    halign: 'center'
-                    write_tab: False
-                    size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.25, 'top': 0.25}
-                    multiline: False
-                    on_text_validate: root.on_angle_val(self)
+            TextInput:
+                id: angle
+                text: root.angle
+                size_hint: None, None
+                halign: 'center'
+                write_tab: False
+                size: dp(40), dp(30)
+                pos_hint: {'center_x': 0.25, 'top': 0.25}
+                multiline: False
+                on_text_validate: root.on_angle_val(self)
 
-                Label:
-                    text: 'Temperatura (ºC)'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.35}
+            Label:
+                text: 'Temperatura (ºC)'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.5, 'top': 0.35}
 
-                TextInput:
-                    id: temperature
-                    text: root.temperature
-                    size_hint: None, None
-                    halign: 'center'
-                    write_tab: False
-                    size: dp(40), dp(30)
-                    pos_hint: {'center_x': 0.75, 'top': 0.25}
-                    multiline: False
-                    on_text_validate: root.on_temperature_val(self)
+            TextInput:
+                id: temperature
+                text: root.temperature
+                size_hint: None, None
+                halign: 'center'
+                write_tab: False
+                size: dp(40), dp(30)
+                pos_hint: {'center_x': 0.5, 'top': 0.25}
+                multiline: False
+                on_text_validate: root.on_temperature_val(self)
 
-                Button:
-                    id: button_add
-                    text: 'Adicionar'
-                    size_hint: None, None
-                    size: dp(200), dp(30)
-                    pos_hint: {'center_x': 0.25, 'bottom': 0}
-                    on_press: root.add_measure()
+            Button:
+                id: button_add
+                text: 'Adicionar'
+                size_hint: None, None
+                size: dp(300), dp(30)
+                pos_hint: {'center_x': 0.5, 'bottom': 0}
+                on_press: root.add_measure()
 
-                ToggleButton:
-                    text: 'auto coletar'
-                    id: tg_auto_collect
-                    active: False
-                    size_hint: None, None
-                    size: dp(200), dp(30)
-                    pos_hint: {'center_x': 0.75, 'bottom': 0}
-                    on_press: root.activate_auto_collect()
-
-            RelativeLayout:
-                canvas.before:
-                    Color:
-                        rgb: rgba('#3b234a')
-                    Rectangle:
-                        size: self.size
-
-                Label:
-                    text: 'Gráficos'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.5, 'top': 1}
-
-                Label:
-                    text: 'Z vs Contagem'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.95}
-                
-                Switch:
-                    id: stch_z_plot
-                    active: False
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.85}
-
-                Label:
-                    text: 'X vs Contagem'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.95}
-                
-                Switch:
-                    id: stch_x_plot
-                    active: False
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.75, 'top': 0.85}
-
-
-                Label:
-                    text: 'Contagem vs tempo'
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.70}
-                
-                Switch:
-                    id: stch_cont_time
-                    active: False
-                    size_hint: None, None
-                    size: dp(40), dp(40)
-                    pos_hint: {'center_x': 0.25, 'top': 0.60}
-                    active: True
-        
+            Label:
+                text: 'Mostrar contagem vs tempo'
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.75, 'top': 0.75}
+            
+            CheckBox:
+                id: check_plot
+                active: True
+                size_hint: None, None
+                size: dp(40), dp(40)
+                pos_hint: {'center_x': 0.75, 'top': 0.65}
+    
         Image:
             id: img_plot
             source: root.plot_img
