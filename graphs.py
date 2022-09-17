@@ -5,27 +5,27 @@ from pathlib import Path
     
 plt.rcParams['font.size'] = 12
 
-def _get_data(folder_path):
+def _get_data(folder_path, time, index):
     files = list(Path(folder_path).glob('*.txt'))
     data = {
         'measures': [],
-        'run': []
+        'time': []
     }
 
-    for index, filename in enumerate(files):
+    for filename in files:
         df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
         data['measures'].append(df['GROSS'][0])
-        data['run'].append(index)
+        data['time'].append(time * index)
 
     data = pd.DataFrame(data)
     return data
 
-def count_over_time(folder_path, xpos, zpos):
-    data = _get_data(folder_path)
+def count_over_time(folder_path, xpos, zpos, time, index):
+    data = _get_data(folder_path, time, index)
 
     sns.scatterplot(
         data = data,
-        x = 'run',
+        x = 'time',
         y = 'measures'
     )
 

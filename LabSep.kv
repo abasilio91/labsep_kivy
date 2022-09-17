@@ -184,7 +184,7 @@ MainWidget:
             
             CheckBox:
                 id: check_plot
-                active: True
+                active: False
                 size_hint: None, None
                 size: dp(40), dp(40)
                 pos_hint: {'center_x': 0.75, 'top': 0.65}
@@ -192,3 +192,4 @@ MainWidget:
         Image:
             id: img_plot
             source: root.plot_img
+            nocache: True

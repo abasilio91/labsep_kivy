@@ -41,7 +41,8 @@ class MainWidget(BoxLayout):
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
-        Clock.schedule_interval(self.update, 30)
+        self.index = 0
+        Clock.schedule_interval(self.update, float(self.time))
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -152,9 +153,11 @@ class MainWidget(BoxLayout):
         self.temperature = widget.text
 
     def update(self, dt):
-        count_over_time(self.folder_path, self.posx, self.posz)
-        self.plot_img = "imgs/count_over_time.png"
-        self.ids.img_plot.reload()
+        if self.ids.check_plot.active:
+            count_over_time(self.folder_path, self.posx, self.posz, self.time, self.index)
+            self.plot_img = "imgs/count_over_time.png"
+            self.ids.img_plot.reload()
+            self.index += 1
 
 class LabSepApp(App):
     pass
