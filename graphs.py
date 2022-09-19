@@ -12,10 +12,10 @@ def _get_data(folder_path, time, index):
         'time': []
     }
 
-    for filename in files:
+    for filename, run in zip(files, range(index)):
         df = pd.read_csv(filename, header=0, skiprows=4, sep=" ", skipinitialspace=True)
         data['measures'].append(df['GROSS'][0])
-        data['time'].append(time * index)
+        data['time'].append(time * run)
 
     data = pd.DataFrame(data)
     return data

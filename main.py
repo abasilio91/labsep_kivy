@@ -33,7 +33,7 @@ class MainWidget(BoxLayout):
     num_points = StringProperty('10')
     posx = StringProperty('')
     posz = StringProperty('')
-    time = StringProperty('20.0')
+    time = StringProperty('2.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
     plot_img = StringProperty('imgs/empty.png')
@@ -154,7 +154,7 @@ class MainWidget(BoxLayout):
 
     def update(self, dt):
         if self.ids.check_plot.active:
-            count_over_time(self.folder_path, self.posx, self.posz, self.time, self.index)
+            count_over_time(self.folder_path, self.posx, self.posz, float(self.time), self.index)
             self.plot_img = "imgs/count_over_time.png"
             self.ids.img_plot.reload()
             self.index += 1
