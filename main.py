@@ -19,12 +19,9 @@ import csv
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
-from kivy.clock import Clock
 
 from tkinter import filedialog, messagebox
 from pathlib import Path
-
-from graphs import count_over_time
 
 class MainWidget(BoxLayout):
     filename = StringProperty('')
@@ -36,13 +33,10 @@ class MainWidget(BoxLayout):
     time = StringProperty('2.0')
     angle = StringProperty('90')
     temperature = StringProperty('25')
-    plot_img = StringProperty('imgs/empty.png')
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.date = datetime.date.today()
-        self.index = 0
-        Clock.schedule_interval(self.update, float(self.time))
 
     # Compile the new data to a dataframe
     def add_measure(self):
@@ -151,13 +145,6 @@ class MainWidget(BoxLayout):
 
     def on_temperature_val(self, widget):
         self.temperature = widget.text
-
-    def update(self, dt):
-        if self.ids.check_plot.active:
-            count_over_time(self.folder_path, self.posx, self.posz, float(self.time), self.index)
-            self.plot_img = "imgs/count_over_time.png"
-            self.ids.img_plot.reload()
-            self.index += 1
 
 class LabSepApp(App):
     pass
