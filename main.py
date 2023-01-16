@@ -49,6 +49,7 @@ class MainWidget(BoxLayout):
         self.on_angle_val(self.ids.angle)
         self.on_temperature_val(self.ids.temperature)
         self.get_measure()
+        self.get_ID()
 
         if not Path(f'resultados/{self.filename}.csv').is_file():
             self.create_file()
@@ -57,7 +58,8 @@ class MainWidget(BoxLayout):
             writer = csv.writer(file)
 
             for index in range(int(self.num_points)):
-                self.data = [self.date,
+                self.data = [self.pontoID,
+                            self.date,
                             self.material,
                             index,
                             self.posx,
@@ -75,7 +77,7 @@ class MainWidget(BoxLayout):
 
     # Create a .csv file to store the data, if the file doesn't already exist
     def create_file(self):
-        header = ['data', 'material', 'ponto', 'x', 'z', 'contagem', 'tempo(s)','inclinação (graus)', 'Temperatura (ºC)']
+        header = ['pontoID', 'data', 'material', 'ponto', 'x', 'z', 'contagem', 'tempo(s)','inclinação (graus)', 'Temperatura (ºC)']
 
         with open(f'resultados/{self.filename}.csv', 'w') as file:
             writer = csv.writer(file)
@@ -145,6 +147,9 @@ class MainWidget(BoxLayout):
 
     def on_temperature_val(self, widget):
         self.temperature = widget.text
+
+    def get_ID(self):
+        self.pontoID = f"x{self.posx}z{self.posz}"
 
 class LabSepApp(App):
     pass
